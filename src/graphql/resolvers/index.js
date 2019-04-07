@@ -6,7 +6,8 @@ export default {
   Date: GraphQLDate,
   Query: {
     getMessage: MessageResolvers.getMessage,
-    getMessages: MessageResolvers.getMessages
+    getMessages: MessageResolvers.getMessages,
+    me: UserResolvers.me
   },
   Mutation: {
     createMessage: MessageResolvers.createMessage,

@@ -6,21 +6,22 @@ import resolvers from './graphql/resolvers'
 import { constants } from './config/constants'
 import serverStatus from './utils/serverStatus'
 import mocks from './mocks'
+import auth from './services/auth'
 import "./config/db";
 
 const app = express();
-
 mongoose.set('debug', true)
 
-// GraphQL: Schema
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: ({ req }) => ({
+    user: req.user
+  })
 });
 
+server.applyMiddleware({ app, auth });
+
 const listening = `App listening on: ${constants.PORT}`;
-
-server.applyMiddleware({ app });
-
 mocks().then(() => app.listen(constants.PORT, err => serverStatus(err, listening)))
 
