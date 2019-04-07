@@ -14,16 +14,13 @@ mongoose.set('debug', true)
 
 // GraphQL: Schema
 const server = new ApolloServer({
-    typeDefs,
-    resolvers
-  });
+  typeDefs,
+  resolvers
+});
 
 const listening = `App listening on: ${constants.PORT}`;
 
 server.applyMiddleware({ app });
 
-mocks().then(() => {
-
-  app.listen(constants.PORT, err => serverStatus(err, listening));
-})
+mocks().then(() => app.listen(constants.PORT, err => serverStatus(err, listening)))
 
